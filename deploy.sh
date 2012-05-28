@@ -1,12 +1,16 @@
 #! /bin/bash
 
 # Sets up a running total-impact from a bare Ubuntu 10.04 Server install.
-# You'll need to supply, when prompted, 
-#   1. the password of the "ti" user that'll be created to host the files.
-#   2. the passphrase to unlock db and api credentials.
+#
+# USAGE
+# -----
+# See the README.md file at https://github.com/total-impact/total-impact-deploy/blob/master/README.md
+
+
+
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source ${DIR}/lib.sh
+#source ${DIR}/lib.sh
 
 
 apt-get update
@@ -19,7 +23,7 @@ passwd ti
 
 #download the total-impact application code
 
-
+apt-get install git-core --assume-yes
 cd /home/ti
 git clone git://github.com/mhahnel/Total-Impact.git
 chown -R ti /home/ti/Total-Impact
