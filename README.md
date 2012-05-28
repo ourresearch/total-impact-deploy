@@ -1,4 +1,4 @@
 deploy
 ======
 
-scripts used to deploy both core and webapp
+This repo has scripts to deploy both core and webapp.
