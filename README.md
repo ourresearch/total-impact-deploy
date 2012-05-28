@@ -2,12 +2,12 @@ This repo has scripts to deploy both core and webapp.
 
 Usage
 -----
-Install the script by by logging in to a fresh server and running:
+Install and run the script by by logging in to a fresh server and running:
 
     apt-get install git-core
     git clone git://github.com/total-impact/total-impact-deploy.git
     total-impact-deploy
-   ./deploy.sh
+    ./deploy.sh
 
 That's it. You'll also need to supply two passwords:
 
