@@ -7,6 +7,7 @@
 # See the README.md file at https://github.com/total-impact/total-impact-deploy/blob/master/README.md
 
 # housekeeping
+start = $(date '+%s')
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #source ${DIR}/lib.sh
 
@@ -32,7 +33,7 @@ chown -R ti /home/ti/total-impact-core
 chown -R ti /home/ti/total-impact-webapp
 
 # install python dependencies
-apt-get install python-setuptools
+apt-get install python-setuptools --assume-yes
 easy_install virtualenv
 curl http://python-distribute.org/distribute_setup.py | python
 curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
@@ -53,5 +54,17 @@ cd ..
 # install nginx and gunicorn
 pip install gunicorn
 apt-get install nginx
+
+
+# setup nginx
+rm /etc/nginx/sites-enabled/default
+touch /etc/nginx/sites-available/total-impact
+ln -s /etc/nginx/sites-available/total-impact  /etc/nginx/sites-enabled/total-impact
+
+
+
+end = $(date '+%s')
+elapsed = $((end - start))
+printf 'Elapsed time: %s seconds\n' $elapsed
 
 
