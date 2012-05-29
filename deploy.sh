@@ -6,12 +6,13 @@
 # -----
 # See the README.md file at https://github.com/total-impact/total-impact-deploy/blob/master/README.md
 
-
-
-
+# housekeeping
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #source ${DIR}/lib.sh
 
+# set the hostname. from http://library.linode.com/getting-started#sph_ubuntu-debian
+echo "jc" > /etc/hostname
+hostname -F /etc/hostname
 
 apt-get update
 apt-get upgrade --assume-yes
@@ -22,38 +23,35 @@ chsh -s /bin/bash ti # use bash shell for ti
 passwd ti
 
 #download the total-impact application code
-
-apt-get install git-core --assume-yes
 cd /home/ti
-git clone git://github.com/mhahnel/Total-Impact.git
-chown -R ti /home/ti/Total-Impact
+# assume user's already installed git, in order to get this script.
+git clone git://github.com/total-impact/total-impact-core
+git clone git://github.com/total-impact/total-impact-webapp
 
-#install php
-php_install_with_apache
-php_tune
+chown -R ti /home/ti/total-impact-core
+chown -R ti /home/ti/total-impact-webapp
 
-#install apache
-# I'm using the "default" vhost, so that this can work from an arbitrary IP not served by DNS;
-# this is useful in creating disposable, virtualised test instances.
-# Restarts will throw "could not determine sever's FQDN, using 127.0.0.1...";
-# this can be safely ignored (http://wiki.apache.org/httpd/CouldNotDetermineServerName)
-cp ${DIR}/default /etc/apache2/sites-available/
-apache_install
-apache_tune 70
+# install python dependencies
+apt-get install python-setuptools
+easy_install virtualenv
+curl http://python-distribute.org/distribute_setup.py | python
+curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python
 
-# install curl and pecl/http
-php_install_libs
+# install the webapp
+cd total-impact-webapp
+pip install .
+cd ..
 
-# install and start memcached
-apt-get install memcached --assume-yes
-memcached -u ti -d -m 24 -l 127.0.0.1 -p 11211 # 24M for now, increase if needed
+# install core
+cd total-impact-core
+apt-get install gcc --assume-yes
+apt-get install python2.6-dev --assume-yes
+apt-get install libxslt-dev libxml2-dev --assume-yes
+pip install .
+cd ..
 
-#install python libs
-apt-get install python-setuptools --assume-yes
-easy_install simplejson BeautifulSoup nose httplib2
-apt-get install python-memcache
+# install nginx and gunicorn
+pip install gunicorn
+apt-get install nginx
 
-# unpack passwords
-cd /home/ti/Total-Impact/config
-./build-config.sh
-chmod a+w creds.ini
+
