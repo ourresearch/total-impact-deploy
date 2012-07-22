@@ -54,10 +54,8 @@ installation
     export LOG_LEVEL=debug
     export CLOUDANT_URL=key # or to run locally: CLOUDANT_URL=http://localhost:5984)
     export CLOUDANT_DB=ti
-
-#### these are for total-impact-webapp:
-
     export API_ROOT=localhost:5001 # production: total-impact-core.herokuapp.com
+    export WEBAPP_ROOT=localhost:5000 # production: total-impact.org
 
 ### this is so you can see the stdout logs [when you run foreman](http://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fddollar%2Fforeman%2Fwiki%2FMissing-Output&sa=D&sntz=1&usg=AFQjCNELDU4lGGgu4FqSSvMYWr_3tiFegg)
 
