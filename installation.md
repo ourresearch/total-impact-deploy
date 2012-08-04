@@ -33,6 +33,11 @@ installation
 ### Install memcache stuff (this is for osx...)
     brew install memcache
     brew install libmemcached
+    
+    # osx bug for direct installing (https://github.com/lericson/pylibmc/issues/84), so gotta build from source:
+    git clone https://github.com/lericson/pylibmc.git
+    python setup.py install --with-libmemcached=/usr/local/Cellar/libmemcached/1.0.4/
+
     pip install pylibmc
 
 ### Clone the repos
@@ -56,6 +61,8 @@ installation
     export CLOUDANT_DB=ti
     export API_ROOT=localhost:5001 # production: total-impact-core.herokuapp.com
     export WEBAPP_ROOT=localhost:5000 # production: total-impact.org
+
+    also some secret ones for heroku addon configs (redis, memcached, etc) ... see secrets doc
 
 ### this is so you can see the stdout logs [when you run foreman](http://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fddollar%2Fforeman%2Fwiki%2FMissing-Output&sa=D&sntz=1&usg=AFQjCNELDU4lGGgu4FqSSvMYWr_3tiFegg)
 
