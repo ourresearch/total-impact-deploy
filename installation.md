@@ -40,6 +40,10 @@ installation
 
     pip install pylibmc
 
+## install postgres to run locally
+
+    MacOX from http://postgresapp.com/
+
 ### Clone the repos
 
     git clone git://github.com/total-impact/total-impact-core
@@ -60,7 +64,8 @@ installation
     export CLOUDANT_URL=key # or to run locally: CLOUDANT_URL=http://localhost:5984)
     export CLOUDANT_DB=ti
     export API_ROOT=localhost:5001 # production: total-impact-core.herokuapp.com
-    export WEBAPP_ROOT=localhost:5000 # production: total-impact.org
+    export WEBAPP_ROOT=localhost:5000 # production: impactstory.org
+    export POSTGRESQL_URL=postgres://localhost/unittests
 
     also some secret ones for heroku addon configs (redis, memcached, etc) ... see secrets doc
 
@@ -72,14 +77,19 @@ installation
 
     cd total-impact-core
 
+### Add the heroku repo; from [StackOverflow thread](http://www.google.com/url?q=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F5129598%2Fhow-to-link-a-folder-with-an-existing-heroku-app&sa=D&sntz=1&usg=AFQjCNG8ifFsW5WlYrXCSeuHxgniHY-sqA).
+
+    git remote add heroku-webapp git@heroku.com:total-impact-webapp.git
+    git remote add heroku-core git@heroku.com:total-impact-core.git
+    git remote add staging git@heroku.com:total-impact-core-staging.git
+
 ### Setup the virtualenv
 
     virtualenv --distribute -p /usr/bin/python2.7 venv 
 
-### Add the heroku repo; from [StackOverflow thread](http://www.google.com/url?q=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F5129598%2Fhow-to-link-a-folder-with-an-existing-heroku-app&sa=D&sntz=1&usg=AFQjCNG8ifFsW5WlYrXCSeuHxgniHY-sqA).
+## Activate the virtualenv before doing install steps below
 
-    git remote add heroku git@heroku.com:total-impact-core.git
-    git remote add staging git@heroku.com:total-impact-core-staging.git
+    source venv/bin/activate
 
 ### install
 
