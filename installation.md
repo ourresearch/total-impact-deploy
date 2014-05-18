@@ -69,6 +69,27 @@ installation
 
     also some secret ones for heroku addon configs (redis, memcached, etc) ... see secrets doc
 
+#### run this stuff to bootstrap Mendeley OAUTH refresh tokens into your redis, from production
+
+import os
+import redis
+
+os.system("heroku config --app total-impact-core | grep REDISTOGO")
+production_redis_url = "PUT URL HERE"
+
+production_r = redis.from_url(production_redis_url)
+l
+local_r.set("MENDELEY_OAUTH2_REFRESH_TOKEN", production_r.get("MENDELEY_OAUTH2_REFRESH_TOKEN"))
+local_r.set("MENDELEY_OAUTH2_ACCESS_TOKEN", production_r.get("MENDELEY_OAUTH2_ACCESS_TOKEN"))
+
+# see secrets doc for a refresh/access token pair
+# can also register for a mendeley client id here:
+http://apidocs.mendeley.com/home/authentication
+
+# and follow these instructions to get a code:
+https://gist.github.com/jalperin/8b3367b65012291fe23f
+
+
 ### this is so you can see the stdout logs [when you run foreman](http://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fddollar%2Fforeman%2Fwiki%2FMissing-Output&sa=D&sntz=1&usg=AFQjCNELDU4lGGgu4FqSSvMYWr_3tiFegg)
 
     export PYTHONUNBUFFERED=true
