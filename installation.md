@@ -74,11 +74,12 @@ installation
 import os
 import redis
 
-os.system("heroku config --app total-impact-core | grep REDISTOGO")
+os.system("heroku config --app total-impact-core | grep REDIS")
 production_redis_url = "PUT URL HERE"
 
 production_r = redis.from_url(production_redis_url)
-l
+local_r = redis.from_url(os.getenv("REDIS_URL"))
+
 local_r.set("MENDELEY_OAUTH2_REFRESH_TOKEN", production_r.get("MENDELEY_OAUTH2_REFRESH_TOKEN"))
 local_r.set("MENDELEY_OAUTH2_ACCESS_TOKEN", production_r.get("MENDELEY_OAUTH2_ACCESS_TOKEN"))
 
